@@ -1,12 +1,14 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { getNewsCollection } from "@/lib/database/collections"
+// import { getNewsCollection } from "@/lib/database/collections"
 import { ObjectId } from "mongodb"
 import { connectToDatabase } from "@/lib/mongodb";
+import { getArticleModel } from "@/lib/models";
 
 export async function POST(request: NextRequest, { params }: { params: { id: string } }) {
   try {
         await connectToDatabase();
-    const newsCollection = await getNewsCollection()
+    // const newsCollection = await getNewsCollection()
+    const newsCollection = await getArticleModel();
 
     await newsCollection.updateOne({ _id: new ObjectId(params.id) }, { $inc: { likes: 1 } })
 
