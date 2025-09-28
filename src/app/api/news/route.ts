@@ -215,7 +215,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { withAuth } from "@/lib/auth/middleware";
 import slugify from "slugify";
 import { connectToDatabase } from "@/lib/mongodb";
-import { getArticleModel } from "@/lib/models";
+import { getArticleModel, getCategoryModel } from "@/lib/models";
 
 /**
  * Utility: Standard Response
@@ -277,6 +277,7 @@ export const GET = async (request: NextRequest) => {
 
     const skip = (page - 1) * limit;
 
+    getCategoryModel();
     const Article = getArticleModel();
     const articles = await Article.find(query)
       .populate("categories")
