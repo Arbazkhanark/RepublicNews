@@ -318,7 +318,7 @@ export default function ContactPage() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
 
@@ -345,9 +345,10 @@ export default function ContactPage() {
           messageType: "general",
         })
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("❌ Request failed:", err)
-      toast.error("Something went wrong. Please try again later.")
+      const errorMessage = err instanceof Error ? err.message : "Something went wrong. Please try again later."
+      toast.error(errorMessage)
     } finally {
       setIsSubmitting(false)
     }

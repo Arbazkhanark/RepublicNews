@@ -1,7 +1,12 @@
-
 "use client"
 
 import { useEffect } from "react"
+
+declare global {
+  interface Window {
+    adsbygoogle?: { push: (params: object) => void }[];
+  }
+}
 
 interface GoogleAdSenseProps {
   adSlot: string
@@ -34,7 +39,7 @@ export function GoogleAdSense({
         data-ad-client={process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID}
         data-ad-slot={adSlot}
         data-ad-format={adFormat}
-        data-full-width-responsive={fullWidthResponsive}
+        data-full-width-responsive={fullWidthResponsive.toString()}
       />
     </div>
   )

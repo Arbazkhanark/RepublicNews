@@ -154,10 +154,10 @@ Support Team
       { message: "Message received successfully!", data: saved },
       { status: 201 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("❌ POST /contact error:", error);
     return NextResponse.json(
-      { error: "Internal Server Error", details: error.message },
+      { error: "Internal Server Error", details: error },
       { status: 500 }
     );
   }

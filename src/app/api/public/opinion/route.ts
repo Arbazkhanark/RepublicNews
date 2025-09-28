@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { connectToDatabase } from "@/lib/mongodb";
 import { getOpinionModel, getUserModel } from "@/lib/models";
 import { z } from "zod";
-import { withAuth } from "@/lib/auth/middleware";
+import { UserFromToken, withAuth } from "@/lib/auth/middleware";
 import { get } from "http";
 
 // Zod validation schema
@@ -20,7 +20,7 @@ const OpinionArticleSchema = z.object({
 
 // POST handler: Create a new opinion article
 // POST handler
-export const POST = withAuth(async (req: NextRequest, user: any) => {
+export const POST = withAuth(async (req: NextRequest, user: UserFromToken) => {
   try {
     await connectToDatabase();
 
@@ -74,7 +74,12 @@ export async function GET(req: NextRequest) {
     const topic = searchParams.get("topic");
     const authorId = searchParams.get("authorId");
 
-    const query: any = {};
+    type Query = {
+      topic?: string;
+      authorId?: mongoose.Types.ObjectId;
+    };
+
+    const query: Query = {};
 
     if (topic) query.topic = topic;
     if (authorId && mongoose.Types.ObjectId.isValid(authorId)) {

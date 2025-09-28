@@ -54,7 +54,7 @@ interface UserStats {
   value: string
   change: string
   trend: "up" | "down" | "neutral"
-  icon: any
+  icon: React.ElementType
 }
 
 export default function UsersPage() {
